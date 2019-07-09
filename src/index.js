@@ -1,12 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import "./index.css";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import * as rtl from "@testing-library/react";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+/**
+ * An asynchronous function that just runs @testing-library/react#wait()
+ * and checks to see if that completes.
+ */
+async function runIt() {
+  const timeoutHandle = setTimeout(() => {
+    console.error("Five seconds on, and wait still hasn't completed");
+  }, 5000);
+
+  await rtl.wait(() => {
+    console.log("This is the function we are waiting for, now complete");
+  });
+
+  clearTimeout(timeoutHandle);
+  console.log("The wait function returned; it's all working fine!");
+}
+
+runIt();
